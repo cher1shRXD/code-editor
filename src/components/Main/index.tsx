@@ -3,11 +3,13 @@ import * as S from "./style";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import editorTheme from "monaco-themes/themes/Pastels on Dark.json";
-
+import MarkdownIt from "markdown-it";
 const Main = () => {
+  const mdParser = new MarkdownIt();
   const monaco = useMonaco();
 
-  const [code,setCode] = useState<string>('');
+  const [code, setCode] = useState<string>("");
+  const [problem, setProblem] = useState<string>("gdgd");
 
   useEffect(() => {
     if (!monaco) return;
@@ -18,12 +20,11 @@ const Main = () => {
     );
 
     monaco.editor.setTheme("editorTheme");
-
   }, [monaco]);
 
-  const handleCode = (e:any) => {
+  const handleCode = (e: any) => {
     setCode(e);
-  }
+  };
 
   return (
     <S.Container>
@@ -32,7 +33,9 @@ const Main = () => {
         <S.Title>문제 제목</S.Title>
       </S.Header>
       <S.Main>
-        <S.ProblemWrap>문제 내용 (마크다운)</S.ProblemWrap>
+        <S.ProblemWrap>
+          
+        </S.ProblemWrap>
         <Editor
           height="100%"
           width="60%"

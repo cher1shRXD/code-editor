@@ -41,10 +41,10 @@ export const ProblemWrap = styled.div`
   flex:1;
   height:100%;
   background-color:#F1F1F1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  padding:1rem;
+  box-sizing:border-box;
   font-size:2rem;
+  overflow:scroll;
 `
 
 export const SubmitWrap = styled.div`
