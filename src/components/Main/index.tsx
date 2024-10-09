@@ -1,26 +1,68 @@
-import { useState } from 'react';
-import * as S from './style'
+import { useEffect, useState } from "react";
+import * as S from "./style";
+import Editor, { useMonaco } from "@monaco-editor/react";
+import { editor } from "monaco-editor";
+import editorTheme from "monaco-themes/themes/Pastels on Dark.json";
 
 const Main = () => {
+  const monaco = useMonaco();
 
-  const [counter, setCounter] = useState<number>(0);
+  const [code,setCode] = useState<string>('');
 
-  const addNumber = () => {
-    setCounter((prev)=>(prev+1));
+  useEffect(() => {
+    if (!monaco) return;
+
+    monaco.editor.defineTheme(
+      "editorTheme",
+      editorTheme as editor.IStandaloneThemeData
+    );
+
+    monaco.editor.setTheme("editorTheme");
+
+  }, [monaco]);
+
+  const handleCode = (e:any) => {
+    setCode(e);
   }
 
   return (
     <S.Container>
-      <S.Title>Welcome To cher1shRXD's World!</S.Title>
-      <S.Content>
-        Edit
-        <S.Path>src/components/Main/index.tsx</S.Path>
-        to make your app!
-      </S.Content>
-      <S.Couter>{counter}</S.Couter>
-      <S.Button onClick={addNumber}>Click me!</S.Button>
+      <S.Header>
+        <S.Back src="/assets/back.svg" />
+        <S.Title>문제 제목</S.Title>
+      </S.Header>
+      <S.Main>
+        <S.ProblemWrap>문제 내용 (마크다운)</S.ProblemWrap>
+        <Editor
+          height="100%"
+          width="60%"
+          language="python"
+          options={{
+            fontSize: 15,
+            minimap: {
+              enabled: false,
+            },
+            scrollbar: {
+              vertical: "auto",
+              horizontal: "auto",
+            },
+            overviewRulerBorder: false,
+            overviewRulerLanes: 0,
+          }}
+          onChange={handleCode}
+          value={code}
+        />
+      </S.Main>
+      <S.SubmitWrap>
+        <S.Button color="#5c5c5c" $textcolor="#f1f1f1" $activecolor="#515151">
+          테스트
+        </S.Button>
+        <S.Button color="#83ff76" $textcolor="#2b2b2b" $activecolor="#84ff76bc">
+          제출
+        </S.Button>
+      </S.SubmitWrap>
     </S.Container>
   );
-}
+};
 
-export default Main
+export default Main;
